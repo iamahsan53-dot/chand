@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Haleema 🌙</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    overflow: hidden;
+    background: linear-gradient(to bottom, #0f2027, #203a43, #2c5364);
+    color: white;
+}
+
+/* 🌙 Crescent Moon */
+.moon {
+    position: absolute;
+    top: 60px;
+    right: 60px;
+    width: 80px;
+    height: 80px;
+    background: #fff;
+    border-radius: 50%;
+    box-shadow: 0 0 20px #fff, 0 0 40px #fff;
+}
+.moon::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 25px;
+    width: 80px;
+    height: 80px;
+    background: #203a43;
+    border-radius: 50%;
+}
+
+/* ✨ Stars */
+.star {
+    position: absolute;
+    width: 3px;
+    height: 3px;
+    background: white;
+    border-radius: 50%;
+    animation: twinkle 2s infinite alternate;
+}
+@keyframes twinkle {
+    from {opacity: 0.3;}
+    to {opacity: 1;}
+}
+
+/* 🎇 Ramzan Lights */
+.lights {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+}
+.bulb {
+    width: 10px;
+    height: 20px;
+    background: gold;
+    border-radius: 50%;
+    box-shadow: 0 0 10px gold;
+    animation: glow 1.5s infinite alternate;
+}
+@keyframes glow {
+    from {opacity: 0.5;}
+    to {opacity: 1;}
+}
+
+/* Content */
+.container {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+}
+.page {
+    display: none;
+    max-width: 350px;
+}
+.active {
+    display: block;
+    animation: fade 1s ease-in-out;
+}
+@keyframes fade {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
+
+.glowText {
+    font-size: 26px;
+    font-weight: bold;
+    text-shadow: 0 0 10px #fff, 0 0 20px #00eaff;
+}
+
+button {
+    margin-top: 20px;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 30px;
+    background: white;
+    color: #203a43;
+    font-weight: bold;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+video {
+    width: 220px;
+    height: 220px;
+    border-radius: 50%;
+    border: 4px solid white;
+    object-fit: cover;
+    box-shadow: 0 0 20px white;
+    margin-top: 15px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="moon"></div>
+
+<script>
+for(let i=0;i<50;i++){
+    let star=document.createElement("div");
+    star.className="star";
+    star.style.top=Math.random()*100+"vh";
+    star.style.left=Math.random()*100+"vw";
+    star.style.animationDuration=(1+Math.random()*2)+"s";
+    document.body.appendChild(star);
+}
+</script>
+
+<div class="lights">
+    <div class="bulb"></div>
+    <div class="bulb"></div>
+    <div class="bulb"></div>
+    <div class="bulb"></div>
+    <div class="bulb"></div>
+    <div class="bulb"></div>
+    <div class="bulb"></div>
+</div>
+
+<div class="container">
+
+<!-- Page 1 -->
+<div class="page active" id="page1">
+    <h1>Ramzan Mubarak 🌙</h1>
+    <p>Haleema… 🤍</p>
+    <p>Mujhe pata hai tum aaj chand dekhne gai thi…</p>
+    <p>Aur jab wo nazar nahi aya to tum thori si udaas ho gai 💫</p>
+    <button onclick="nextPage(2)">Next ✨</button>
+</div>
+
+<!-- Page 2 -->
+<div class="page" id="page2">
+    <p>Lekin ek baat bataun?</p>
+    <p>Har khoobsurat cheez aasman me nahi hoti…</p>
+    <p>Kuch chand zameen par bhi hote hain ✨</p>
+    <p>Jo Ramzan ko aur bhi roshan bana dete hain 🤍</p>
+    <button onclick="nextPage(3)">Ab sach dekho 💌</button>
+</div>
+
+<!-- Page 3 -->
+<div class="page" id="page3">
+    <h2 class="glowText">Chand dhoond rahi thi na? 🌙</h2>
+    <p>Thora sa neeche dekho…</p>
+    <p>Ramzan ka sabse noor wala chand...</p>
+    <p class="glowText">Haleema 🤍</p>
+    <video id="mirror" autoplay playsinline></video>
+</div>
+
+</div>
+
+<script>
+function nextPage(pageNumber){
+    document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+    document.getElementById('page'+pageNumber).classList.add('active');
+    if(pageNumber===3){startCamera();}
+}
+
+function startCamera(){
+    const video=document.getElementById('mirror');
+    navigator.mediaDevices.getUserMedia({video:{facingMode:"user"}})
+    .then(stream=>{video.srcObject=stream;})
+    .catch(()=>{alert("Camera allow karo na... chand dekhna hai 🤍");});
+}
+</script>
+
+</body>
+</html>
